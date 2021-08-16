@@ -1,3 +1,6 @@
+/**
+ * @param {_length}        length         length of ship, zero indexed.
+ */
 const shipFactory = function(_length){
     const length = _length;
     let sections = [];
@@ -31,3 +34,4 @@ const shipFactory = function(_length){
 
 
 module.exports = shipFactory;
+
