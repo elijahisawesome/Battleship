@@ -11,8 +11,8 @@
     display:grid;
     grid-template-columns: repeat(10, 20px);
     grid-template-rows:auto;
-    grid-gap: 5px;
-    width:245px;
+    grid-gap: 1px;
+    width:210px;
     margin:auto;
 }
 

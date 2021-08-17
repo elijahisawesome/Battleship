@@ -1,9 +1,12 @@
 const ship = require( './ship.js');
 const boardDoms = require('./boardDoms.js');
+const player = require('./Player.js');
 
 const BOARD_SIZE = 10;
 
-const Gameboard = function(){
+const Gameboard = function(_player){
+    let player = _player;
+    const name = _player.getName();
     let gameBoard = boardDoms();
     let grid = [];
     let chunk = function(_domElement){
@@ -28,10 +31,8 @@ const Gameboard = function(){
             domElement.classList.add('ship');
         }
         
-        function getShip(){
-            return ship;
-        }
-        return {recieveAttack, setShip, getShip};
+
+        return {recieveAttack, setShip};
     }
     function init(){
         for(let i = 0; i<BOARD_SIZE; i++){
@@ -45,17 +46,35 @@ const Gameboard = function(){
     }
     function appender(i,j){
         newDomPiece = gameBoard.getNewChunk(i,j);
+        newDomPiece.addEventListener('click', clickedElement);
         gameBoard.getGameBoard().append(newDomPiece);
         return newDomPiece;
+    }
+    function clickedElement(e){
+        e.stopPropagation();
+        if(!player.readyToFight()){
+            newShip = player.addShipToBoard();
+            //spin out to a "constructCords" function
+            let coords = [{x:e.target.dataset.x, y:e.target.dataset.y}];
+            if(player.isVertical()){
+               for(let i = 1; i<newShip.getLength(); i++){
+                    coords.push({y:e.target.dataset.y, x:parseInt(e.target.dataset.x)+i})
+               } 
+            }
+            else{
+                for(let i = 1; i<newShip.getLength(); i++){
+                    coords.push({x:e.target.dataset.x, y:parseInt(e.target.dataset.y)+i})
+               } 
+            }
+            addShipI(coords, newShip);
+        }
     }
 
     /**
      * 
-     * @param {x:val, y:val} coords accepts an array of coordinates, form {x:xVal, y:yVal}
+     * @param {ship} ship accepts an array of coordinates and a ship
      */
-    function addShip(coords){
-        let newShip = new ship(Object.keys(coords).length);
-
+    function addShipI(coords, newShip){
         let i = 0;
         coords.forEach((coordinate) =>{
             grid[coordinate['x']][coordinate['y']].setShip(newShip, i);
@@ -65,7 +84,7 @@ const Gameboard = function(){
 
     init();
 
-    return {grid, addShip};
+    return {grid, addShipI};
 }
 
 

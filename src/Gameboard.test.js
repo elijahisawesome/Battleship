@@ -1,5 +1,6 @@
 const { expect, test } = require('@jest/globals');
 const Gameboard = require('./Gameboard.js');
+const Ship = require('./ship.js');
 
 beforeEach(()=>{
     testBoard = Gameboard();
@@ -20,12 +21,11 @@ test('confirm adding ship works', ()=> {
 
 test('confirm ship gets hit',()=>{
     let coords = [{x:3,y:4},{x:3,y:5},{x:3,y:6}];
-    testBoard.addShip(coords)
+    let myShip = Ship(3);
+    testBoard.addShipI(coords, myShip);
 
-    let myShip = testBoard.grid[3][4].getShip();
     testBoard.grid[3][5].recieveAttack();
     testBoard.grid[3][4].recieveAttack();
-    
     expect(myShip.isSunk()).toBe(false);
     testBoard.grid[3][6].recieveAttack();
     expect(myShip.isSunk()).toBe(true);
