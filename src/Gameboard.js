@@ -8,6 +8,7 @@ const Gameboard = function(_player){
     let player = _player;
     const name = _player.getName();
     let gameBoard = boardDoms();
+    let mainDiv = gameBoard.getGameBoard();
     let grid = [];
     let chunk = function(_domElement){
         let domElement = _domElement;
@@ -46,28 +47,13 @@ const Gameboard = function(_player){
     }
     function appender(i,j){
         newDomPiece = gameBoard.getNewChunk(i,j);
-        newDomPiece.addEventListener('click', clickedElement);
+        //newDomPiece.addEventListener('click', clickedElement);
         gameBoard.getGameBoard().append(newDomPiece);
         return newDomPiece;
     }
+    //Move this whole event listener to index, run a game logic loop there. Doesn't need to be in gameboard
     function clickedElement(e){
-        e.stopPropagation();
-        if(!player.readyToFight()){
-            newShip = player.addShipToBoard();
-            //spin out to a "constructCords" function
-            let coords = [{x:e.target.dataset.x, y:e.target.dataset.y}];
-            if(player.isVertical()){
-               for(let i = 1; i<newShip.getLength(); i++){
-                    coords.push({y:e.target.dataset.y, x:parseInt(e.target.dataset.x)+i})
-               } 
-            }
-            else{
-                for(let i = 1; i<newShip.getLength(); i++){
-                    coords.push({x:e.target.dataset.x, y:parseInt(e.target.dataset.y)+i})
-               } 
-            }
-            addShipI(coords, newShip);
-        }
+       
     }
 
     /**
@@ -84,7 +70,7 @@ const Gameboard = function(_player){
 
     init();
 
-    return {grid, addShipI};
+    return {grid, addShipI, mainDiv};
 }
 
 
