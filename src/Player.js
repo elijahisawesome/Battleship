@@ -1,8 +1,8 @@
 const ship = require( './ship.js');
 
-const playerFactory = function(_name){
+const playerFactory = function(_name, ships){
     const name = _name;
-    let RemainingTurns = 4;
+    let RemainingTurns = ships;
     let vertical = false;
 
     function addShipToBoard(){

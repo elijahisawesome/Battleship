@@ -43,7 +43,7 @@ const Gameboard = function(_player){
                 grid[i][j] = chunk(newDomPiece);
             }
         }
-        document.body.append(gameBoard.getGameBoard());
+        //document.body.append(gameBoard.getGameBoard());
     }
     function appender(i,j){
         newDomPiece = gameBoard.getNewChunk(i,j);
@@ -51,11 +51,6 @@ const Gameboard = function(_player){
         gameBoard.getGameBoard().append(newDomPiece);
         return newDomPiece;
     }
-    //Move this whole event listener to index, run a game logic loop there. Doesn't need to be in gameboard
-    function clickedElement(e){
-       
-    }
-
     /**
      * 
      * @param {ship} ship accepts an array of coordinates and a ship

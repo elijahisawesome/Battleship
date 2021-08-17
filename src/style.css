@@ -19,9 +19,13 @@
 .ship{
     background:red;
 }
-.ship.attacked{
+.ship.chunk.attacked{
     background: orange;
 }
 .chunk.attacked{
     background: black;
+}
+.fullBoard{
+    display:grid;
+    grid-gap: 50px;
 }

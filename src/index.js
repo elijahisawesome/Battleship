@@ -4,27 +4,52 @@ const gameBoard = require('./Gameboard.js');
 const player = require( './Player.js');
 
 const main = (function(){
-    const player1 = player('player1');
+    const player1 = player('player1', 4);
     let gameBoard1 = gameBoard(player1);
     let playerBoard1 = gameBoard1.mainDiv;
     
+    const player2 = player('player2', 4);
+    let gameBoard2 = gameBoard(player2);
+    let playerBoard2 = gameBoard2.mainDiv;
+
     function init(){
+        const overDiv = document.createElement('div');
+        overDiv.classList.add('fullBoard');
+
         Array.from(playerBoard1.children).forEach(child =>{
-            child.addEventListener('click', (event)=>{divListenHandler(event,event.target, player1, gameBoard1)})
+            child.addEventListener('click', (event)=>{divListenHandlerSetup(event,event.target, player1, gameBoard1)})
         })
+
+        Array.from(playerBoard2.children).forEach(child =>{
+            child.addEventListener('click', event=>{
+                divListenHandlerPlay(event,event.target, player1, gameBoard2);
+            }
+        )})
+        overDiv.append(playerBoard1, playerBoard2);
+        document.body.append(overDiv);
     }
 
-    function divListenHandler(e,chunk, player, gameBoard){
+    function remover(){
+
+    }
+    function divListenHandlerSetup(e,chunk, player, gameBoard){
         console.log(chunk);
         
         if(!player.readyToFight()){
             setupPhase(chunk, player, gameBoard);
         }
         else if(player.readyToFight()){
-            fireShot(chunk, player, gameBoard);
+            remover();
         }
         e.stopPropagation();
-        
+    }
+    function divListenHandlerPlay(e, chunk, player, gameBoard){
+        if(!player.readyToFight()){
+            console.log('Hold yr horses, chief');        
+        }
+        else{
+             fireShot(chunk, player, gameBoard);
+        }
     }
 
     function setupPhase(chunk, player, gameBoard){
@@ -45,7 +70,7 @@ const main = (function(){
     }
 
     function fireShot(chunk, player, gameBoard){
-
+        gameBoard.grid[chunk.dataset.x][chunk.dataset.y].recieveAttack();
     }
     init();
 })()
