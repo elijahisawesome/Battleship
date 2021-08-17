@@ -1,0 +1,9 @@
+.chunk{
+    border-radius:5%;
+    background-color:skyblue;
+}
+
+.gameBoard{
+    background-color: grey;
+    display:grid;
+}
