@@ -1,9 +1,27 @@
 .chunk{
     border-radius:5%;
     background-color:skyblue;
+    height:20px;
+    width:20px;
+    display:grid;
 }
 
 .gameBoard{
     background-color: grey;
     display:grid;
+    grid-template-columns: repeat(10, 20px);
+    grid-template-rows:auto;
+    grid-gap: 5px;
+    width:245px;
+    margin:auto;
+}
+
+.ship{
+    background:red;
+}
+.ship.attacked{
+    background: orange;
+}
+.chunk.attacked{
+    background: black;
 }

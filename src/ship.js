@@ -15,15 +15,15 @@ const shipFactory = function(_length){
         return sections;
     }
     function registerHit(section){
-        sections[section-1].hit = true;
+        sections[section].hit = true;
     }
     function getSection(section){
-        return(sections[section-1].hit);
+        return(sections[section].hit);
     }
     function isSunk(){
         let sunk = true;
         sections.forEach(section =>{
-            if(section.hit = false){
+            if(section.hit == false){
                 sunk = false;
             }
         })

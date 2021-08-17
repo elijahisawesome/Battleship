@@ -15,6 +15,7 @@ const Gameboard = function(){
         const recieveAttack = function(){
             let hit = false;
             if (occupied){
+                ship.registerHit(section);
                 hit = true;
             }
             domElement.classList.add('attacked');
@@ -27,8 +28,10 @@ const Gameboard = function(){
             domElement.classList.add('ship');
         }
         
-        
-        return {recieveAttack, setShip};
+        function getShip(){
+            return ship;
+        }
+        return {recieveAttack, setShip, getShip};
     }
     function init(){
         for(let i = 0; i<BOARD_SIZE; i++){
@@ -38,6 +41,7 @@ const Gameboard = function(){
                 grid[i][j] = chunk(newDomPiece);
             }
         }
+        document.body.append(gameBoard.getGameBoard());
     }
     function appender(i,j){
         newDomPiece = gameBoard.getNewChunk(i,j);
@@ -60,7 +64,6 @@ const Gameboard = function(){
     }
 
     init();
-
 
     return {grid, addShip};
 }

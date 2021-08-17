@@ -17,3 +17,17 @@ test('confirm adding ship works', ()=> {
     expect(testBoard.grid[3][4].recieveAttack()).toBe(true);
     expect(testBoard.grid[3][7].recieveAttack()).toBe(false);
 })
+
+test('confirm ship gets hit',()=>{
+    let coords = [{x:3,y:4},{x:3,y:5},{x:3,y:6}];
+    testBoard.addShip(coords)
+
+    let myShip = testBoard.grid[3][4].getShip();
+    testBoard.grid[3][5].recieveAttack();
+    testBoard.grid[3][4].recieveAttack();
+    
+    expect(myShip.isSunk()).toBe(false);
+    testBoard.grid[3][6].recieveAttack();
+    expect(myShip.isSunk()).toBe(true);
+
+})
