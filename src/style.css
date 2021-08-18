@@ -27,10 +27,10 @@
     background: black;
 }
 .ship.chunk.attacked.cpu{
-    background:orange;
+    background:red;
 }
 .ship.cpu{
-    background: greenyellow;
+    background: skyblue;
 }
 .fullBoard{
     display:grid;

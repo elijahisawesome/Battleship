@@ -61,7 +61,7 @@ const Gameboard = function(_player){
      * 
      * @param {ship} ship accepts an array of coordinates and a ship
      */
-    function addShipI(coords, newShip){
+    function addShip(coords, newShip){
         let i = 0;
         coords.forEach((coordinate) =>{
             grid[coordinate['x']][coordinate['y']].setShip(newShip, i);
@@ -91,7 +91,7 @@ const Gameboard = function(_player){
 
     init();
 
-    return {grid, addShipI, mainDiv, validateShipPlacement, validateAttack};
+    return {grid, addShip, mainDiv, validateShipPlacement, validateAttack};
 }
 
 

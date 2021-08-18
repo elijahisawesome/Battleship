@@ -1,4 +1,3 @@
-import shipFactory from './ship.js';
 import './style.css';
 const gameBoard = require('./Gameboard.js');
 const player = require( './Player.js');
@@ -6,19 +5,28 @@ const player = require( './Player.js');
 const main = (function(){
     const overDiv = document.createElement('div');
 
-    const player1 = player('player1', 4);
-    let gameBoard1 = gameBoard(player1);
-    let playerBoard1 = gameBoard1.mainDiv;
+    document.body.append(overDiv);
+    let player1;
+    let gameBoard1;
+    let playerBoard1;
 
-    const player2 = player('cpu', 4);
-    let gameBoard2 = gameBoard(player2);
-    let playerBoard2 = gameBoard2.mainDiv;
+    let player2;
+    let gameBoard2;
+    let playerBoard2;
 
-    let activePlayer;
-    let gameStarted = false;
+    let gameStarted;
 
     function init(){
-        
+        player1 = player('player1', 4);
+        gameBoard1 = gameBoard(player1);
+        playerBoard1 = gameBoard1.mainDiv;
+
+        player2 = player('cpu', 4);
+        gameBoard2 = gameBoard(player2);
+        playerBoard2 = gameBoard2.mainDiv;
+
+        gameStarted = false;
+
         overDiv.classList.add('fullBoard');
         playerBoard1.addEventListener('click', (event)=>{
             divListenHandlerSetup(event, event.target, player1, gameBoard1);
@@ -26,7 +34,6 @@ const main = (function(){
         })
         
         overDiv.append(playerBoard1);
-        document.body.append(overDiv);
     }
 
 
@@ -37,6 +44,7 @@ const main = (function(){
         }
         else if(player1.readyToFight()){
             cpuPlay();
+            checkIfWinner();
         }
 
     }
@@ -62,6 +70,7 @@ const main = (function(){
         playerBoard2.addEventListener('click', event=>{
                 divListenHandlerPlay(event,event.target, player1, gameBoard2);
                 })
+        Array.from(playerBoard2.children).forEach(child =>{child.classList.add('cpu')})
         
                 
         function placeShips(){    
@@ -91,7 +100,7 @@ const main = (function(){
                 
                 if(gameBoard2.validateShipPlacement(coords)){
                     console.log(coords);
-                    gameBoard2.addShipI(coords, newShip);
+                    gameBoard2.addShip(coords, newShip);
                 }
                 else{
                     player2.invalidMove();
@@ -115,15 +124,19 @@ const main = (function(){
 
         }
         placeShips();
-        playerBoard2.classList.add('cpu');
         overDiv.append(playerBoard2);
     }
 
     function divListenHandlerPlay(e, chunk, player, gameBoard){
-        if(gameBoard.validateAttack({x:chunk.dataset.x, y:chunk.dataset.y})){
-             fireShot(chunk, player, gameBoard);
-             checkIfWinner();
-             mainLoop();
+        try{
+            if(gameBoard.validateAttack({x:chunk.dataset.x, y:chunk.dataset.y})){
+                fireShot(chunk, player, gameBoard);
+                checkIfWinner();
+                mainLoop();
+            }
+        }
+        catch{
+            return;
         }
     }
 
@@ -143,10 +156,19 @@ const main = (function(){
     function checkIfWinner(){
         if(player1.hasLost()){
             alert('player 2 wins');
+            reset();
+            init();
         }
         else if(player2.hasLost()){
             alert('player 1 wins');
+            reset();
+            init();
         }
+    }
+    function reset(){
+        Array.from(overDiv.children).forEach(child=>{
+            child.remove();
+        })
     }
     
     function setupPhase(chunk, player, gameBoard){
@@ -164,7 +186,7 @@ const main = (function(){
            }
         }
         if(gameBoard.validateShipPlacement(coords)){
-            gameBoard.addShipI(coords, newShip);
+            gameBoard.addShip(coords, newShip);
         }
         else{
             player.invalidMove();
