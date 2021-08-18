@@ -17,6 +17,7 @@ const Gameboard = function(_player){
         let ship;
         let section;
         const recieveAttack = function(){
+            attacked = true;
             let hit = false;
             if (occupied){
                 ship.registerHit(section);
@@ -31,9 +32,16 @@ const Gameboard = function(_player){
             occupied = true;
             domElement.classList.add('ship');
         }
+
+        function checkAttacked(){
+            return attacked;
+        }
+        function checkOccupied(){
+            return occupied;
+        }
         
 
-        return {recieveAttack, setShip};
+        return {recieveAttack, setShip, checkAttacked, checkOccupied};
     }
     function init(){
         for(let i = 0; i<BOARD_SIZE; i++){
@@ -43,11 +51,9 @@ const Gameboard = function(_player){
                 grid[i][j] = chunk(newDomPiece);
             }
         }
-        //document.body.append(gameBoard.getGameBoard());
     }
     function appender(i,j){
         newDomPiece = gameBoard.getNewChunk(i,j);
-        //newDomPiece.addEventListener('click', clickedElement);
         gameBoard.getGameBoard().append(newDomPiece);
         return newDomPiece;
     }
@@ -62,10 +68,30 @@ const Gameboard = function(_player){
             i++;
         })
     }
+    function validateShipPlacement(coords){
+        let valid = true;
+        try{
+            coords.forEach((coordinate)=>{
+                if(grid[coordinate['x']][coordinate['y']].checkOccupied()){
+                    valid = false;
+                }
+            })
+        }
+        catch{
+            valid = false;
+        }
+        return valid;
+    }
+    function validateAttack(coord){
+        if (grid[coord['x']][coord['y']].checkAttacked()){
+            return false;
+        }
+        return true;
+    }
 
     init();
 
-    return {grid, addShipI, mainDiv};
+    return {grid, addShipI, mainDiv, validateShipPlacement, validateAttack};
 }
 
 

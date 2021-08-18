@@ -17,15 +17,24 @@
 }
 
 .ship{
-    background:red;
+    background:orange;
 }
 .ship.chunk.attacked{
-    background: orange;
+    background: red;
 }
+
 .chunk.attacked{
     background: black;
 }
+.ship.chunk.attacked.cpu{
+    background:orange;
+}
+.ship.cpu{
+    background: greenyellow;
+}
 .fullBoard{
     display:grid;
+    grid-template-columns: 210px 210px;
     grid-gap: 50px;
+    margin-left: auto;
 }

@@ -1,23 +1,30 @@
 const ship = require( './ship.js');
 
-const playerFactory = function(_name, ships){
+const playerFactory = function(_name, amtOfShips){
     const name = _name;
-    let RemainingTurns = ships;
+    let RemainingTurns = amtOfShips;
+    let ships = [];
     let vertical = false;
 
     function addShipToBoard(){
         if(RemainingTurns == 4){
             RemainingTurns--;
-            return ship(4);
+            let newShip = ship(4);
+            ships.push(newShip);
+            return newShip;
             
         }
         else if(RemainingTurns ==3){
             RemainingTurns--;
-            return ship(3);
+            let newShip = ship(3);
+            ships.push(newShip);
+            return newShip;
         }
         else{
             RemainingTurns--;
-            return ship(2);
+            let newShip = ship(2);
+            ships.push(newShip);
+            return newShip;
         }
     }
 
@@ -28,19 +35,36 @@ const playerFactory = function(_name, ships){
         return false;
     }
 
+    function invalidMove(){
+        RemainingTurns ++;
+        ships.pop();
+    }
+
     function getName(){
         return name;
     }
     function isVertical(){
         return vertical;
     }
+    function hasLost(){
+        let lost = true;
+        ships.forEach(ship=>{
+            if(!ship.isSunk()){
+                lost = false;
+            }
+        })
+        return lost;
+    }
     document.addEventListener('keypress', (e)=>{
         if(e.key == 'v'){
-            vertical = !vertical;
+            toggleVertical();
         }
     })
+    function toggleVertical(){
+        vertical = !vertical;
+    }
 
-    return{getName, readyToFight, addShipToBoard, isVertical}
+    return{getName, readyToFight, addShipToBoard, isVertical, hasLost, invalidMove, toggleVertical}
 }
 
 
