@@ -1,5 +1,5 @@
 const { expect, test } = require('@jest/globals');
-const ship = require('./ship.js');
+const ship = require('../ship.js');
 
 beforeEach(()=>{
     testShip = ship(5);

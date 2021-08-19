@@ -16,6 +16,18 @@
     margin:auto;
 }
 
+.p1{
+    position:absolute;
+    left:10%;
+}
+.p2{
+    position:absolute;
+    right:10%;
+}
+body{
+    background: rgb(32, 32, 32)
+}
+
 .ship{
     background:orange;
 }
@@ -36,5 +48,13 @@
     display:grid;
     grid-template-columns: 210px 210px;
     grid-gap: 50px;
-    margin-left: auto;
+    text-align:center;
+}
+
+.title{
+    font-size: 100%;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: auto;
+    text-align:center;
+    color: whitesmoke;
 }

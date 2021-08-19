@@ -1,8 +1,14 @@
-const gameBoardDoms = function(){
+const gameBoardDoms = function(name){
     const mainDiv = document.createElement('div');
 
     function init(){        
         mainDiv.classList.add('gameBoard');
+        if(name == 'player1'){
+            mainDiv.classList.add('p1');
+        }
+        else if (name == 'player2'){
+            mainDiv.classList.add('p2');
+        }
     }
 
     function getNewChunk(x, y){

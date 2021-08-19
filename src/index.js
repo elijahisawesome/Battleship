@@ -1,9 +1,12 @@
 import './style.css';
-const gameBoard = require('./Gameboard.js');
-const player = require( './Player.js');
+import Header from './Modules/Header.js';
+const gameBoard = require('./Modules/Gameboard.js');
+const player = require( './Modules/Player.js');
+
 
 const main = (function(){
     const overDiv = document.createElement('div');
+    let header = Header();
 
     document.body.append(overDiv);
     let player1;
@@ -21,17 +24,20 @@ const main = (function(){
         gameBoard1 = gameBoard(player1);
         playerBoard1 = gameBoard1.mainDiv;
 
-        player2 = player('cpu', 4);
+        player2 = player('player2', 4);
         gameBoard2 = gameBoard(player2);
         playerBoard2 = gameBoard2.mainDiv;
 
         gameStarted = false;
+
+        header.setupScreen();
 
         overDiv.classList.add('fullBoard');
         playerBoard1.addEventListener('click', (event)=>{
             divListenHandlerSetup(event, event.target, player1, gameBoard1);
             mainLoop();
         })
+        
         
         overDiv.append(playerBoard1);
     }
@@ -40,6 +46,7 @@ const main = (function(){
     function mainLoop(){
         if(player1.readyToFight()&&!gameStarted){
             cpuPopulator();
+            header.fightScreen();
             gameStarted = true;
         }
         else if(player1.readyToFight()){

@@ -1,7 +1,7 @@
 const { expect, test } = require('@jest/globals');
-const Gameboard = require('./Gameboard.js');
-const Ship = require('./ship.js');
-const player = require('./Player.js');
+const Gameboard = require('../Gameboard.js');
+const Ship = require('../ship.js');
+const player = require('../Player.js');
 
 beforeEach(()=>{
     testPlayer = player('player', 4);
