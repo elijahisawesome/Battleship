@@ -50,6 +50,7 @@ const main = (function(){
             gameStarted = true;
         }
         else if(player1.readyToFight()){
+            console.log("wait shit");
             cpuPlay();
             checkIfWinner();
         }
@@ -106,7 +107,6 @@ const main = (function(){
                  }
                 
                 if(gameBoard2.validateShipPlacement(coords)){
-                    console.log(coords);
                     gameBoard2.addShip(coords, newShip);
                 }
                 else{
